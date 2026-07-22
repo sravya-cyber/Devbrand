@@ -8,9 +8,6 @@ import { getLCUserStats } from "../services/leetcodeService.js";
 import { getGHUserStats } from "../services/githubService.js";
 import { runMilestoneCheck } from "../services/milestoneService.js";
 import {
-  getTwitterAuthUrl, exchangeTwitterCode, getTwitterUser,
-} from "../services/twitterService.js";
-import {
   getLinkedInAuthUrl, exchangeLinkedInCode, getLinkedInUser,
 } from "../services/linkedinService.js";
 import logger from "../utils/logger.js";
@@ -96,7 +93,7 @@ router.get("/", protect, async (req, res, next) => {
 router.delete("/:platform", protect, async (req, res, next) => {
   try {
     const { platform } = req.params;
-    if (["twitter", "linkedin"].includes(platform)) {
+    if (platform === "linkedin") {
       await SocialAccount.findOneAndUpdate({ userId: req.user._id, platform }, { isActive: false });
     } else {
       await User.findByIdAndUpdate(req.user._id, { [`codingProfiles.${platform}`]: {} });
@@ -116,41 +113,6 @@ router.post("/check-milestones", protect, async (req, res, next) => {
   }
 });
 
-// ─── Twitter OAuth ─────────────────────────────────────────────────────────
-
-router.get("/twitter/auth", protect, (req, res) => {
-  const state = `${req.user._id}:${crypto.randomBytes(16).toString("hex")}`;
-  oauthStates.set(state, { userId: req.user._id.toString() });
-  setTimeout(() => oauthStates.delete(state), 10 * 60 * 1000);
-  res.redirect(getTwitterAuthUrl(state));
-});
-
-router.get("/twitter/callback", async (req, res) => {
-  const { code, state, error } = req.query;
-  if (error) return res.redirect(`${process.env.CLIENT_URL}/accounts?error=twitter_denied`);
-  const stateData = oauthStates.get(state);
-  if (!stateData) return res.redirect(`${process.env.CLIENT_URL}/accounts?error=invalid_state`);
-  oauthStates.delete(state);
-  try {
-    const tokens = await exchangeTwitterCode(code);
-    const twUser = await getTwitterUser(tokens.access_token);
-    await SocialAccount.findOneAndUpdate(
-      { userId: stateData.userId, platform: "twitter" },
-      {
-        userId: stateData.userId, platform: "twitter",
-        platformUserId: twUser.id, username: twUser.username,
-        displayName: twUser.name, profileImage: twUser.profile_image_url,
-        accessToken: tokens.access_token, refreshToken: tokens.refresh_token || "",
-        isActive: true,
-      },
-      { upsert: true, new: true }
-    );
-    res.redirect(`${process.env.CLIENT_URL}/accounts?success=twitter`);
-  } catch (err) {
-    logger.error("Twitter callback error:", err.message);
-    res.redirect(`${process.env.CLIENT_URL}/accounts?error=twitter_failed`);
-  }
-});
 
 // ─── LinkedIn OAuth ────────────────────────────────────────────────────────
 

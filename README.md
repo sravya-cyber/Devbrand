@@ -41,7 +41,7 @@ devbrand/
 │   ├── models/      # Mongoose schemas
 │   ├── queues/      # Bull.js queue + worker
 │   ├── routes/      # API routes
-│   └── services/    # Gemini, CF, LC, GH, Twitter, LinkedIn
+│   └── services/    # Gemini, CF, LC, GH, LinkedIn
 ├── client/          # React frontend
 │   └── src/
 │       ├── pages/   # Dashboard, CreatePost, Calendar, Analytics, Accounts, Milestones
@@ -90,9 +90,6 @@ ENCRYPTION_KEY=exactly_32_characters_here!!!!!!
 CLIENT_URL=http://localhost:5173
 
 # Optional (for posting to social media)
-TWITTER_CLIENT_ID=...
-TWITTER_CLIENT_SECRET=...
-TWITTER_CALLBACK_URL=http://localhost:5000/api/accounts/twitter/callback
 LINKEDIN_CLIENT_ID=...
 LINKEDIN_CLIENT_SECRET=...
 LINKEDIN_CALLBACK_URL=http://localhost:5000/api/accounts/linkedin/callback
@@ -126,7 +123,6 @@ npm run dev
 | GitHub API | No key needed | Public repos/users are free |
 | Codeforces API | No key needed | Fully public |
 | LeetCode | No key needed | Unofficial public GraphQL |
-| Twitter API | https://developer.twitter.com | Free Basic tier |
 | LinkedIn API | https://developer.linkedin.com | Free for personal apps |
 
 ---

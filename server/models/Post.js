@@ -19,7 +19,7 @@ const postSchema = new mongoose.Schema(
     // Which platforms to post to
     platforms: {
       type: [String],
-      enum: ["twitter", "linkedin"],
+      enum: ["linkedin"],
       required: true,
       validate: [(arr) => arr.length > 0, "At least one platform required"],
     },
@@ -40,7 +40,6 @@ const postSchema = new mongoose.Schema(
 
     // Platform post IDs after publishing
     publishedIds: {
-      twitter: String,
       linkedin: String,
     },
 
@@ -74,12 +73,6 @@ const postSchema = new mongoose.Schema(
 
     // Analytics (populated after publishing)
     analytics: {
-      twitter: {
-        likes: { type: Number, default: 0 },
-        retweets: { type: Number, default: 0 },
-        replies: { type: Number, default: 0 },
-        impressions: { type: Number, default: 0 },
-      },
       linkedin: {
         likes: { type: Number, default: 0 },
         comments: { type: Number, default: 0 },

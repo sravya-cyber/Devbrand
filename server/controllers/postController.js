@@ -182,7 +182,7 @@ export const getCalendarPosts = async (req, res, next) => {
       userId: req.user._id,
       isDeleted: false,
       scheduledAt: { $gte: startDate, $lte: endDate },
-    }).select("content platforms scheduledAt status engagementScore");
+    }).select("content platforms scheduledAt status engagementScore imageUrl");
 
     res.json({ posts });
   } catch (error) {

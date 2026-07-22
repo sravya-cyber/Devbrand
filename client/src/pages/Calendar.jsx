@@ -6,7 +6,6 @@ import {
 	ChevronLeft,
 	ChevronRight,
 	PenSquare,
-	Twitter,
 	Linkedin,
 	CheckCircle,
 	Clock,
@@ -207,10 +206,15 @@ export default function Calendar() {
 														<span className="ml-auto text-xs text-slate-500">{format(new Date(post.scheduledAt), "h:mm a")}</span>
 													</div>
 													<p className="text-sm text-slate-700 line-clamp-3">{post.content}</p>
+													{post.imageUrl && (
+														<div className="mt-2 rounded-lg overflow-hidden border border-slate-200/10 max-h-32">
+															<img src={post.imageUrl} alt="Post Attachment" className="w-full h-full object-cover" />
+														</div>
+													)}
 													<div className="flex items-center gap-2 mt-2">
 														{post.platforms?.map((p) => (
 															<span key={p} className="text-slate-700">
-																{p === "twitter" ? <Twitter size={12} /> : <Linkedin size={12} />}
+																{p === "linkedin" && <Linkedin size={12} />}
 															</span>
 														))}
 														{post.engagementScore?.score && <span className="ml-auto text-xs text-brand-400">Score: {post.engagementScore.score}/10</span>}

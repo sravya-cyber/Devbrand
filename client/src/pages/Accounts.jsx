@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import api from "../services/api";
 import toast from "react-hot-toast";
-import { Github, Twitter, Linkedin, Link2, CheckCircle, RefreshCw, Code, Trophy, Zap, ExternalLink } from "lucide-react";
+import { Github, Linkedin, Link2, CheckCircle, RefreshCw, Code, Trophy, Zap, ExternalLink } from "lucide-react";
 import { useAuth } from "../context/AuthContext";
 
 export default function Accounts() {
@@ -46,9 +46,10 @@ export default function Accounts() {
   };
 
   const connectOAuth = (platform) => {
-    const token = localStorage.getItem("accessToken");
-    window.location.href = `/api/accounts/${platform}/auth?token=${token}`;
-  };
+  const token = localStorage.getItem("accessToken");
+  const backendUrl = import.meta.env.VITE_API_URL || "";
+  window.location.href = `${backendUrl}/api/accounts/${platform}/auth?token=${token}`;
+};
 
   const triggerCheck = async () => {
     setChecking(true);
@@ -72,7 +73,6 @@ export default function Accounts() {
   const lcConnected = !!profiles?.leetcode?.username;
   const ghConnected = !!profiles?.github?.username;
   const liConnected = social.some(a => a.platform === "linkedin");
-  const twConnected = social.some(a => a.platform === "twitter");
 
   const ConnectedBadge = () => (
     <span style={{ display:"flex", alignItems:"center", gap:5, fontSize:12, color:"#16a34a", fontWeight:600 }}>
@@ -229,28 +229,6 @@ export default function Accounts() {
               }
             </>)}
 
-            {/* Twitter */}
-            {card(<>
-              <div style={{ display:"flex", alignItems:"center", gap:12 }}>
-                <div style={{ width:40, height:40, borderRadius:12, background:"#e0f2fe", display:"flex", alignItems:"center", justifyContent:"center", flexShrink:0 }}>
-                  <Twitter size={20} color="#0284c7"/>
-                </div>
-                <div style={{ flex:1 }}>
-                  <p style={{ fontWeight:600, fontSize:14, color:"#1a1a2e" }}>Twitter / X</p>
-                  {twConnected ? <ConnectedBadge/> : <p style={{ fontSize:12, color:"#b0b3cc" }}>Not connected</p>}
-                </div>
-                {twConnected
-                  ? <button onClick={() => disconnect("twitter")} style={{ fontSize:12, color:"#ef4444", background:"none", border:"none", cursor:"pointer", fontWeight:500 }}>Disconnect</button>
-                  : <button onClick={() => connectOAuth("twitter")} className="btn-primary" style={{ fontSize:13, background:"linear-gradient(135deg,#0284c7,#0ea5e9)" }}><ExternalLink size={14}/> Connect</button>
-                }
-              </div>
-              {twConnected
-                ? <p style={{ fontSize:12, color:"#16a34a", marginTop:12, paddingTop:12, borderTop:"1px solid #f1f5f9" }}>✓ Ready to post to Twitter / X</p>
-                : <div style={{ marginTop:12, padding:"10px 14px", background:"#f0f9ff", borderRadius:10, border:"1px solid #bae6fd", fontSize:12, color:"#6b6b8f" }}>
-                    Twitter API requires a paid plan ($100/month). Posts will use mock publishing for demo.
-                  </div>
-              }
-            </>)}
 
             {/* Milestone trigger */}
             <div style={{ background:"linear-gradient(135deg,#eeeffe,#f3e8ff)", border:"1px solid #ddd6fe", borderRadius:14, padding:"18px 20px" }}>

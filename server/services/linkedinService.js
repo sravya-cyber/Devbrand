@@ -15,13 +15,21 @@ export const publishToLinkedIn = async (account, post) => {
 
     const personUrn = `urn:li:person:${profileRes.data.sub}`;
 
+    const shareMediaCategory = post.imageUrl ? "ARTICLE" : "NONE";
+    const media = post.imageUrl ? [{
+      status: "READY",
+      originalUrl: post.imageUrl,
+      title: { text: post.content.slice(0, 30) || "Post Link" }
+    }] : [];
+
     const payload = {
       author: personUrn,
       lifecycleState: "PUBLISHED",
       specificContent: {
         "com.linkedin.ugc.ShareContent": {
           shareCommentary: { text: post.content },
-          shareMediaCategory: "NONE",
+          shareMediaCategory,
+          ...(post.imageUrl ? { media } : {}),
         },
       },
       visibility: { "com.linkedin.ugc.MemberNetworkVisibility": "PUBLIC" },

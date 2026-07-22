@@ -5,10 +5,6 @@ import logger from "../../utils/logger.js";
 
 const tryPublish = async (platform, account, post) => {
   try {
-    if (platform === "twitter") {
-      const { publishToTwitter } = await import("../../services/twitterService.js");
-      return await publishToTwitter(account, post);
-    }
     if (platform === "linkedin") {
       const { publishToLinkedIn } = await import("../../services/linkedinService.js");
       return await publishToLinkedIn(account, post);

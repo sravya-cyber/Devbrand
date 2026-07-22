@@ -4,12 +4,11 @@ import api from "../services/api";
 import toast from "react-hot-toast";
 import {
   Wand2, Zap, Hash, Star, ChevronDown, ChevronUp,
-  Twitter, Linkedin, Send, Clock, RefreshCw, Image
+  Linkedin, Send, Clock, RefreshCw, Image
 } from "lucide-react";
 
-const PLATFORM_LIMITS = { twitter: 280, linkedin: 3000 };
+const PLATFORM_LIMITS = { linkedin: 3000 };
 
-const toneOptions = ["professional", "casual", "educational", "storytelling"];
 const audienceOptions = ["developers", "tech recruiters", "students", "open source community"];
 
 export default function CreatePost() {
@@ -23,7 +22,6 @@ export default function CreatePost() {
 
   // AI state
   const [aiContext, setAiContext] = useState("");
-  const [tone, setTone] = useState("professional");
   const [audience, setAudience] = useState("developers");
   const [variants, setVariants] = useState([]);
   const [score, setScore] = useState(null);
@@ -56,7 +54,6 @@ export default function CreatePost() {
       const { data } = await api.post("/ai/generate", {
         context: aiContext,
         platform: primaryPlatform,
-        tone,
         audience,
       });
       setVariants(data.variants || []);
@@ -200,35 +197,19 @@ export default function CreatePost() {
                   />
                 </div>
 
-                <div className="grid grid-cols-2 gap-2">
-                  <div>
-                    <label className="text-xs text-slate-500 mb-1 block">Tone</label>
-                    <select
-                      className="input text-sm"
-                      value={tone}
-                      onChange={(e) => setTone(e.target.value)}
-                    >
-                      {toneOptions.map((t) => (
-                        <option key={t} value={t} className="bg-surface-800">
-                          {t.charAt(0).toUpperCase() + t.slice(1)}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                  <div>
-                    <label className="text-xs text-slate-500 mb-1 block">Audience</label>
-                    <select
-                      className="input text-sm"
-                      value={audience}
-                      onChange={(e) => setAudience(e.target.value)}
-                    >
-                      {audienceOptions.map((a) => (
-                        <option key={a} value={a} className="bg-surface-800">
-                          {a.charAt(0).toUpperCase() + a.slice(1)}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
+                <div>
+                  <label className="text-xs text-slate-500 mb-1 block">Audience</label>
+                  <select
+                    className="input text-sm"
+                    value={audience}
+                    onChange={(e) => setAudience(e.target.value)}
+                  >
+                    {audienceOptions.map((a) => (
+                      <option key={a} value={a} className="bg-surface-800">
+                        {a.charAt(0).toUpperCase() + a.slice(1)}
+                      </option>
+                    ))}
+                  </select>
                 </div>
 
                 <button
@@ -346,7 +327,6 @@ export default function CreatePost() {
               <div className="flex gap-3">
                 {[
                   { id: "linkedin", icon: Linkedin, label: "LinkedIn", color: "text-blue-400" },
-                  { id: "twitter", icon: Twitter, label: "Twitter / X", color: "text-sky-400" },
                 ].map(({ id, icon: Icon, label, color }) => (
                   <button
                     key={id}

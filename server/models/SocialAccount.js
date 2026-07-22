@@ -10,7 +10,7 @@ const socialAccountSchema = new mongoose.Schema(
     },
     platform: {
       type: String,
-      enum: ["twitter", "linkedin"],
+      enum: ["linkedin"],
       required: true,
     },
     platformUserId: { type: String, required: true },

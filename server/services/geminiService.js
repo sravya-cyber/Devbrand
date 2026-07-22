@@ -34,8 +34,7 @@ Target audience: ${audience || "developers and tech recruiters"}
 Requirements:
 - Each variant should have a different angle/tone
 - Include relevant hashtags at the end
-- Keep Twitter posts under 280 characters (excluding hashtags)
-- LinkedIn posts can be longer (150-300 words)
+- LinkedIn posts can be 150-300 words
 - Make them authentic, not generic
 
 Respond ONLY with valid JSON in this exact format:
@@ -175,7 +174,6 @@ Stats:
 - LeetCode problems solved: ${stats.lcSolved}
 - GitHub commits: ${stats.ghCommits}
 - LinkedIn impressions: ${stats.linkedinImpressions}
-- Twitter impressions: ${stats.twitterImpressions}
 
 Write a brief (3-4 sentences), encouraging plain-English summary highlighting wins and one suggestion for next week. No bullet points, just natural prose.`;
 
@@ -184,7 +182,7 @@ Write a brief (3-4 sentences), encouraging plain-English summary highlighting wi
 
 // Generate image prompt for DALL-E / HuggingFace
 export const generateImagePrompt = async (postContent) => {
-  const prompt = `Create a concise image generation prompt for this developer social media post. The image should be professional, tech-themed, and suitable for LinkedIn/Twitter.
+  const prompt = `Create a concise image generation prompt for this developer social media post. The image should be professional, tech-themed, and suitable for LinkedIn.
 
 Post: "${postContent.slice(0, 200)}"
 

@@ -88,7 +88,6 @@ export const getWeeklyDigest = async (req, res, next) => {
       lcSolved: req.user.stats?.leetcode?.totalSolved || 0,
       ghCommits: 0,
       linkedinImpressions: posts.reduce((sum, p) => sum + (p.analytics?.linkedin?.impressions || 0), 0),
-      twitterImpressions: posts.reduce((sum, p) => sum + (p.analytics?.twitter?.impressions || 0), 0),
     };
 
     const digest = await generateWeeklyDigest(stats);

@@ -26,7 +26,6 @@ router.get("/overview", async (req, res, next) => {
     const totalImpressions = recentPosts.reduce((sum, post) => {
       return (
         sum +
-        (post.analytics?.twitter?.impressions || 0) +
         (post.analytics?.linkedin?.impressions || 0)
       );
     }, 0);
