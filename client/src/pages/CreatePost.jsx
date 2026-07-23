@@ -135,7 +135,7 @@ export default function CreatePost() {
       await api.post("/posts", {
         content: fullContent,
         platforms,
-        scheduledAt,
+        scheduledAt: new Date(scheduledAt).toISOString(),
         imageUrl,
         aiGenerated: variants.length > 0,
         variants,
@@ -155,7 +155,8 @@ export default function CreatePost() {
     score?.score >= 6 ? "text-yellow-400" : "text-red-400";
 
   // Min datetime for scheduling (now + 2 min)
-  const minDateTime = new Date(Date.now() + 2 * 60 * 1000)
+  // Min datetime in local time for the input field
+  const minDateTime = new Date(Date.now() + 2 * 60 * 1000 - new Date().getTimezoneOffset() * 60000)
     .toISOString()
     .slice(0, 16);
 

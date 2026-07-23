@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
 import {
-  Code2, Github, Trophy, Zap, BarChart2,
-  Chrome, CheckCircle, ArrowRight
+  Code2, Github, Trophy, Zap, BarChart2, CheckCircle, ArrowRight
 } from "lucide-react";
 
 const Feature = ({ icon: Icon, color, title, desc }) => (
@@ -93,12 +92,7 @@ export default function Landing() {
             title="Smart Scheduler"
             desc="Powered by a Bull.js job queue — posts are published reliably even if the server restarts, with automatic retry logic."
           />
-          <Feature
-            icon={Chrome}
-            color="bg-rose-500"
-            title="Chrome Extension"
-            desc="Highlight any text on any technical article and instantly turn it into a social post without opening the platform."
-          />
+          
         </div>
       </section>
 
