@@ -11,7 +11,6 @@
 - **Engagement Scorer** — Rates every post 1–10 before publishing with actionable improvement tips
 - **Smart Scheduler** — Bull.js + Redis job queue with exponential backoff retry logic
 - **Analytics Dashboard** — GitHub-style activity heatmap, platform breakdown charts, AI weekly digest
-- **Chrome Extension** — Highlight any text on any page → turn it into a scheduled social post instantly
 
 ---
 
@@ -43,14 +42,11 @@ devbrand/
 │   ├── routes/      # API routes
 │   └── services/    # Gemini, CF, LC, GH, LinkedIn
 ├── client/          # React frontend
-│   └── src/
-│       ├── pages/   # Dashboard, CreatePost, Calendar, Analytics, Accounts, Milestones
-│       ├── context/ # Auth context
-│       └── services/# Axios instance with token refresh
-└── extension/       # Chrome Extension (Manifest V3)
-    ├── background/  # Service worker + context menu
-    ├── content/     # Content script
-    └── popup/       # Extension popup UI
+   └── src/
+       ├── pages/   # Dashboard, CreatePost, Calendar, Analytics, Accounts, Milestones
+       ├── context/ # Auth context
+      └── services/# Axios instance with token refresh
+
 ```
 
 ---
@@ -146,15 +142,6 @@ npm run dev
 3. Add `VITE_API_URL=https://your-render-url.onrender.com` if needed
 4. Deploy
 
-### Chrome Extension (Local)
-
-1. Open Chrome → `chrome://extensions/`
-2. Enable **Developer Mode** (top right)
-3. Click **Load unpacked**
-4. Select the `extension/` folder
-5. Update `API_BASE` in `background/background.js` to your Render URL
-
----
 
 ## 🏆 Milestone Detection
 
@@ -189,11 +176,3 @@ Gemini 1.5 Flash has a generous free tier with no credit card required, making t
 The cron job runs every 2 hours to check all users' connected profiles against stored stats. Only genuine changes (new rank, new problem count milestone) trigger a draft — no spam.
 
 ---
-
-## 📝 Resume Bullets
-
-> Built an AI-powered developer personal branding platform using MERN stack that auto-detects Codeforces rank upgrades, LeetCode milestones, and GitHub achievements via background cron jobs, drafting social media posts using Gemini AI with A/B variant generation and engagement scoring.
-
-> Implemented a Bull.js + Redis job queue for reliable post scheduling with exponential backoff retry logic, ensuring zero post loss across server restarts; deployed backend on Render and frontend on Vercel at zero cost.
-
-> Developed a Chrome Extension (Manifest V3) enabling users to highlight any text on any webpage and schedule it as a social media post instantly, without opening the main platform.
